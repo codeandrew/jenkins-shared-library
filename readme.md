@@ -4,7 +4,7 @@
 
 ### String Parameter
 vars/helloWorld.groovy
-```
+```groovy
 @Library("shared-library") _
 pipeline {
     agent any
@@ -22,7 +22,7 @@ pipeline {
 
 ### Map Config
 vars/helloWorldMap.groovy
-```
+```groovy
 @Library("shared-library") _
 pipeline {
     agent any
@@ -36,3 +36,7 @@ pipeline {
     }
 }
 ```
+
+
+## References:
+- https://www.jenkins.io/doc/book/pipeline/shared-libraries/

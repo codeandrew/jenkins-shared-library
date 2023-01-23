@@ -1,6 +1,6 @@
 def call(Map config = [:]) {
   sh '''
-  bash
+  #!/bin/bash
   echo $SHELL
   printenv
   echo Hello World, I am ${config.name}

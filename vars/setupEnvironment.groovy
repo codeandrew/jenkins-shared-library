@@ -1,11 +1,9 @@
 def call(Map config = [:]) {
   sh '''
-  ls -latr /usr/bin
+
   bash
-  echo $SHELL
   printenv
-  echo Hello World, I am ${config.name}
-  echo and Im a ${config.job}
+
 
   if [[ -f microservice-templates ]]; then
     cd microservice-templates

@@ -1,5 +1,7 @@
 def call(Map config = [:]) {
-  bash '''
+  sh '''
+  bash
+  echo $SHELL
   printenv
   echo Hello World, I am ${config.name}
   echo and Im a ${config.job}

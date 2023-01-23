@@ -16,7 +16,7 @@ def call(){
   interface_info=$(ifconfig -a)
 
   # Get IP Addresses
-  ip_addresses=$(ip -4 addr show scope global | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+  ip_addresses=$(ip -4 addr show scope global | grep -oP '(?<=inet\\s)\\d+(\\.\\d+){3}')
 
   # Print System Information
   echo "OS Name: $os_name"

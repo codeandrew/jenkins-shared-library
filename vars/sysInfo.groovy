@@ -1,6 +1,17 @@
 def call(){
   sh '''
   set +x
+
+  if [ -f /.dockerenv ]; then
+    echo '=================================='
+    echo " Running in a Docker container"
+    echo '=================================='
+  else
+    echo '=================================='
+    echo " Running in a virtual machine"
+    echo '=================================='
+  fi
+
   # Get OS Name
   os_name=$(cat /etc/*-release | grep ^NAME | awk -F'=' '{print $2}')
 

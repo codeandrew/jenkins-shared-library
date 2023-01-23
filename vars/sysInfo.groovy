@@ -1,5 +1,5 @@
 def call(){
-  sh """
+  sh '''
   # Get OS Name
   os_name=$(cat /etc/*-release | grep ^NAME | awk -F'=' '{print $2}')
 
@@ -52,5 +52,5 @@ def call(){
   else
       echo "[-] HTTP connection ... Failed"
   fi
-  """
+  '''
 }

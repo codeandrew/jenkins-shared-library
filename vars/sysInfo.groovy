@@ -1,5 +1,6 @@
 def call(){
   sh '''
+  set +x
   # Get OS Name
   os_name=$(cat /etc/*-release | grep ^NAME | awk -F'=' '{print $2}')
 

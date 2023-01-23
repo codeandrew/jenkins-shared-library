@@ -1,6 +1,6 @@
 def call(Map config = [:]) {
-  bash """
-  echo $SHELL
+  bash '''
+  printenv
   echo Hello World, I am ${config.name}
   echo and Im a ${config.job}
 
@@ -13,5 +13,5 @@ def call(Map config = [:]) {
 
   mkdir -p $HOME/mongo/crud
   docker volume create --driver local --opt type=none --opt device=$HOME/mongo/crud --opt o=bind mongo_crud
-  """
+  '''
 }

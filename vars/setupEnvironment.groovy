@@ -1,5 +1,6 @@
 def call(Map config = [:]) {
-  sh """
+  bash """
+  echo $SHELL
   echo Hello World, I am ${config.name}
   echo and Im a ${config.job}
 

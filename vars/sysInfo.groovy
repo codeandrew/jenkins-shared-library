@@ -1,6 +1,5 @@
 def call(){
   sh '''
-  set +x
 
   if [ -f /.dockerenv ]; then
     echo '=================================='

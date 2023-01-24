@@ -1,5 +1,5 @@
 def call(){
-  sh '''#!/bin/bash
+  sh """#!/bin/bash
     tools=("docker" "docker-compose" "helm" "ping" "wget" "curl" "traceroute" "dig" "netcat" "nc")
 
     # Function to check if a tool is present
@@ -18,5 +18,5 @@ def call(){
     for tool in "${tools[@]}"; do
         check_tool $tool
     done
-'''
+"""
 }

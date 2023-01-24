@@ -1,4 +1,4 @@
-def call(String name, String job){
+def call(){
   sh '''
     tools=("docker" "docker-compose" "helm" "ping" "wget" "curl" "traceroute" "dig" "netcat" "nc")
 
@@ -10,6 +10,10 @@ def call(String name, String job){
             echo "[-] $1 is not present"
         fi
     }
+    
+    for tool in "${tools[@]}"; do
+        check_tool $tool
+    done
   '''
 }
 

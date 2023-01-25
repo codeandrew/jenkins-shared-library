@@ -67,23 +67,24 @@ pipeline {
         stage('Deploy'){
             steps {
                 sh ''' #!/bin/bash
-                IMAGE=codeandrew/fastapi:env
+                VERSION=$(date +'%y.%m.%d')-${BUILD_NUMBER}
+                IMAGE=codeandrew/fastapi:$VERSION
                 CONTAINER_NAME=fastapi
-                APP_VERSION="jenkins-deploy"
+                APP_VERSION="$VERSION"
 
                 echo "[+] DOCKER RUN : $IMAGE"
                 docker pull $IMAGE
                 
-
                 if [ ! "$(docker ps -a -q -f name=$CONTAINER_NAME)" ]; then
-                    docker stop $CONTAINER_NAME
+                    docker stop $CONTAINER_NAME &>/dev/null
                     if [ "$(docker ps -aq -f status=exited -f name=$CONTAINER_NAME)" ]; then
-                        docker rm $CONTAINER_NAME
+                        docker rm $CONTAINER_NAME  &>/dev/null
                     fi
                     docker run --name $CONTAINER_NAME -d --env app_verions="$APP_VERSION" -p 80:80 -v $(pwd):/app $IMAGE 
                 fi
                 sleep 1
                 docker ps 
+                docker container ls -a
                 '''
             }
         }

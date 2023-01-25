@@ -56,3 +56,4 @@ pipeline {
 - Concise Pipelines with Shared Libraries: https://www.youtube.com/watch?v=FXoW3HP1ebk
 - infra as code: https://www.digitalocean.com/community/tutorials/how-to-automate-jenkins-setup-with-docker-and-jenkins-configuration-as-code
 - Pipeline as Yaml: https://plugins.jenkins.io/pipeline-as-yaml/
+- Adding an agent: https://www.jenkins.io/doc/book/using/using-agents/

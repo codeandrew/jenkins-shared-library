@@ -1,5 +1,9 @@
 @Library("shared-library") _
 pipeline {
+    environment{
+        app_version = sh(script: "echo \$(date +'%y.%m.%d')-$BUILD_NUMBER", returnStdout: true).trim()
+    }
+
     agent any
     stages {
         stage("Test") {
@@ -10,7 +14,9 @@ pipeline {
                 docker images
                 echo "[+] BUILD NUMBER:"
                 echo ${BUILD_NUMBER}
+                echo $app_version
                 '''
+
             }
         }
         
@@ -23,25 +29,16 @@ pipeline {
         stage('Setup'){
             steps {
               setupKubectl()
-              sh '''
-                curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
-                chmod 700 get_helm.sh
-                ./get_helm.sh
-            
-                helm version
-              '''
-              
+              setupHelm()
             }
         }
         stage('Build'){
             steps {
-                sh ''' #!/bin/bash
-                pwd; ls -latr
-                VERSION=$(date +'%y.%m.%d')-${BUILD_NUMBER}
-                docker build -t codeandrew/fastapi:$VERSION .
-                docker push codeandrew/fastapi:$VERSION 
-                
-                '''
+                dockerBuild(
+                    image_repository: "codeandrew",
+                    container_name: "fastapi",
+                    tag: "${env.app_version}"
+                )
             }
         }
         stage('Package Helm'){ 

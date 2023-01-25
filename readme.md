@@ -9,7 +9,10 @@ Setup the shared library first
 $JENKINS_URL/manage/configure
 Configure System -> Global Pipeline Libraries
 name: shared-library 
-version: main 
+version: main  
+Source Code Management: Git
+- Project Repository: https://github.com/codeandrew/jenkins-shared-library.git
+
 ```
 
 

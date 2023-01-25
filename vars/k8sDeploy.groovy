@@ -1,5 +1,5 @@
 def call(Map config = [:]) {
-  sh """bin/bash
+  sh """ #!/bin/bash
   NAMESPACE="${config.namespace}"
   VERSION="${config.version}"
   echo "======================================================"

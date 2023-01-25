@@ -1,10 +1,5 @@
 def call(Map config = [:]) {
   sh """ #!/bin/bash
-  IMAGE="${config.image_repository}/${config.container_name}:${config.tag}"
-  docker build -t \$IMAGE .
-  docker push \$IMAGE
-
-
 
   VERSION="${config.version}"
   ENVIRONMENT="${config.environment}"

@@ -37,4 +37,3 @@ echo ================================
 
 docker ps 
 echo "Go to http://localhost:8080"
-

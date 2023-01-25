@@ -6,6 +6,12 @@ pipeline {
         stage("Test") {
             steps {
                 helloWorld("Jean Andrew", "DevOps Engineer")
+                sh ''' #!/bin/bash
+                docker ps
+                docker images
+                echo "[+] BUILD NUMBER:"
+                echo ${BUILD_NUMBER}
+                '''
             }
         }
         
@@ -51,13 +57,36 @@ pipeline {
             steps {
                 sh ''' #!/bin/bash
                 pwd; ls -latr
-                docker build -t codeandrew/jaf-fastapi:latest .
-                docker push codeandrew/jaf-fastapi:latest 
+                VERSION=$(date +'%y.%m.%d')-${BUILD_NUMBER}
+                docker build -t codeandrew/fastapi:$VERSION .
+                docker push codeandrew/fastapi:$VERSION 
                 
                 '''
             }
         }
-        
+        stage('Deploy'){
+            steps {
+                sh ''' #!/bin/bash
+                IMAGE=codeandrew/fastapi:env
+                CONTAINER_NAME=fastapi
+                APP_VERSION="jenkins-deploy"
+
+                echo "[+] DOCKER RUN : $IMAGE"
+                docker pull $IMAGE
+                
+
+                if [ ! "$(docker ps -a -q -f name=$CONTAINER_NAME)" ]; then
+                    docker stop $CONTAINER_NAME
+                    if [ "$(docker ps -aq -f status=exited -f name=$CONTAINER_NAME)" ]; then
+                        docker rm $CONTAINER_NAME
+                    fi
+                    docker run --name $CONTAINER_NAME -d --env app_verions="$APP_VERSION" -p 80:80 -v $(pwd):/app $IMAGE 
+                fi
+                sleep 1
+                docker ps 
+                '''
+            }
+        }
       
     }
 }

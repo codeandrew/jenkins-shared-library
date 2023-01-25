@@ -52,3 +52,7 @@ pipeline {
 
 ## References:
 - https://www.jenkins.io/doc/book/pipeline/shared-libraries/
+- Creating a CI/CD Pipeline for Your Shared Libraries: https://www.youtube.com/watch?v=DDBzm-KT24E
+- Concise Pipelines with Shared Libraries: https://www.youtube.com/watch?v=FXoW3HP1ebk
+- infra as code: https://www.digitalocean.com/community/tutorials/how-to-automate-jenkins-setup-with-docker-and-jenkins-configuration-as-code
+- Pipeline as Yaml: https://plugins.jenkins.io/pipeline-as-yaml/

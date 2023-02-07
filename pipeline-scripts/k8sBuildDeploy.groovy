@@ -41,7 +41,8 @@ pipeline {
                 trivyScanner(
                     targetImage: "codeandrew/fastapi:${env.app_version}",
                     outputPath:"/tmp/scan_results",
-                    scannerURL: "http://206.189.148.20:5000/store"
+                    scannerURL: "http://206.189.148.20:5000/store",
+                    gitSecrets: "codeandrew-github-private-repo"
                 )
             }
         }

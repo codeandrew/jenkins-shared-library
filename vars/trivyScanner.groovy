@@ -7,10 +7,10 @@ def call(Map config = [:]) {
     target_image=${config.targetImage}
     output_path=${config.outputPath}
     version=\$(date +'%y.%m.%d')
-
     report_name=\$BUILD_ID-\$(echo \$target_image | sed 's/:/_/')-\$version.json
     
 
+    docker pull \$target_image
     result=\$(bash trivy-executor.sh \
         --image \$target_image \
         --output-path \$output_path\
@@ -18,6 +18,6 @@ def call(Map config = [:]) {
 
     echo \$result
     ls -altr \$output_path
-    python3 scanner-client.py \$result
+    SCANNER_URL=${config.scannerURL} python3 scanner-client.py \$result
     """
 }

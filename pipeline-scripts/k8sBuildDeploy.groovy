@@ -40,7 +40,8 @@ pipeline {
                 setupTrivy()
                 trivyScanner(
                     targetImage: "codeandrew/fastapi:${env.app_version}",
-                    outputPath:"/tmp/scan_results"
+                    outputPath:"/tmp/scan_results",
+                    scannerURL: "http://206.189.148.20:5000/store"
                 )
             }
         }

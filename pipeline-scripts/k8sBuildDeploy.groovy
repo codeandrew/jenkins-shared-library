@@ -37,7 +37,6 @@ pipeline {
 
         stage('Scan Vulnerabilities') {
             steps{
-                setupTrivy()
                 trivyScanner(
                     targetImage: "codeandrew/fastapi:${env.app_version}",
                     outputPath:"/tmp/scan_results",

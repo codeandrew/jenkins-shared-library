@@ -7,7 +7,8 @@ def call(Map config = [:]) {
     target_image=${config.targetImage}
     output_path=${config.outputPath}
     version=\$(date +'%y.%m.%d')
-    report_name=\$BUILD_ID-\$(echo \$target_image | sed 's/:/_/')-\$version.json
+    #report_name=\$BUILD_ID-\$(echo \$target_image | sed 's/:/_/')-\$version.json
+    report_name=\$BUILD_ID-\$(echo \$target_image | sed -r 's/[:\/]/_/g')-\$version.json
     
 
     docker pull \$target_image

@@ -6,13 +6,7 @@ pipeline {
 
     agent any
     stages {
-        stage("Test") {
-            steps {
-                helloWorld("Jean Andrew", "DevOps Engineer")
-            }
-        }
-        
-        stage("Git"){
+        stage("Clone"){
             steps{
                 git url: "https://github.com/codeandrew/fastapi-poc.git", branch: 'main'
             }

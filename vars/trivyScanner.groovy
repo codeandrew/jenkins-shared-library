@@ -1,8 +1,9 @@
-def reportName = "${config.targetImage}".replaceAll("/", "_").replaceAll(":", "_")
 
 def call(Map config = [:]) {
+    def reportName = "${config.targetImage}".replaceAll("/", "_").replaceAll(":", "_")
+    
     git branch: 'main', credentialsId: 'codeandrew-github-private-repo', url: 'https://github.com/codeandrew/scanner-service.git'
-
+    
     sh """ #!/bin/bash
     cd client
 

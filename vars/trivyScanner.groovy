@@ -1,6 +1,6 @@
 def call(Map config = [:]) {
-    git credentialsId: "codeandrew-github-private-repo", url: 'https://github.com/codeandrew/scanner-service.git'
-    branch: 'main'
+    git branch: 'main', credentialsId: 'codeandrew-github-private-repo', url: 'https://github.com/codeandrew/scanner-service.git'
+
     sh """ #!/bin/bash
     cd client
 

@@ -1,3 +1,5 @@
+def reportName = "${config.targetImage}".replaceAll("/", "_").replaceAll(":", "_")
+
 def call(Map config = [:]) {
     git branch: 'main', credentialsId: 'codeandrew-github-private-repo', url: 'https://github.com/codeandrew/scanner-service.git'
 
@@ -9,7 +11,7 @@ def call(Map config = [:]) {
     version=\$(date +'%y.%m.%d')
     #report_name=\$BUILD_ID-\$(echo \$target_image | sed 's/:/_/')-\$version.json
     # sed -r 's/[:\/]/_/g' original
-    report_name=\$BUILD_ID-\$(echo \$target_image | sed -r 's/[:\\/]/_/g')-\$version.json
+    report_name=\$BUILD_ID-${reportName}-\$version.json
     
 
     docker pull \$target_image

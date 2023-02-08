@@ -37,12 +37,14 @@ pipeline {
 
         stage('Scan Vulnerabilities') {
             steps{
-                trivyScanner(
-                    targetImage: "codeandrew/fastapi:${env.app_version}",
-                    outputPath:"/tmp/scan_results",
-                    scannerURL: "http://206.189.148.20:5000/store",
-                    gitSecrets: "codeandrew-github-private-repo"
-                )
+                dir("/tmp/scan"){
+                    trivyScanner(
+                        targetImage: "codeandrew/fastapi:${env.app_version}",
+                        outputPath:"/tmp/scan_results",
+                        scannerURL: "http://206.189.148.20:5000/store",
+                        gitSecrets: "codeandrew-github-private-repo"
+                    )
+                }
             }
         }
 
@@ -62,7 +64,6 @@ pipeline {
                     environment: "test",
                     version: "${env.app_version}"
                 )
-                
             }
         }
 

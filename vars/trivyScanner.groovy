@@ -21,6 +21,6 @@ def call(Map config = [:]) {
 
     echo \$result
     ls -altr \$output_path
-    SCANNER_URL=${config.scannerURL} python3 scanner-client.py \$result
+    #SCANNER_URL=${config.scannerURL} python3 scanner-client.py \$result
     """
 }

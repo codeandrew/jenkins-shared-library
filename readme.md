@@ -52,6 +52,68 @@ pipeline {
 }
 ```
 
+## BRANCHING STRATEGY
+
+| Branch     | Stage Triggered                   |
+|------------|-----------------------------------|
+| Any Branch | Build Stage                       |
+| develop    | Deploy to Integration Environment |
+| release/*  | Deploy to Staging Environment     |
+| master     | Deploy to Production Environment  |
+
+
+```groovy
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            when {
+                anyOf {
+                    changeset '*'
+                    branch 'main'
+                }
+            }
+            steps {
+                // Build the application
+            }
+        }
+
+        stage('Deploy to Integration') {
+            when {
+                branch 'develop'
+            }
+            steps {
+                // Deploy to integration environment
+            }
+        }
+
+        stage('Deploy to Staging') {
+            when {
+                branch 'release/*'
+            }
+            steps {
+                // Deploy to staging environment
+            }
+        }
+
+        stage('Deploy to Production') {
+            when {
+                branch 'main'
+            }
+            steps {
+                // Deploy to production environment
+            }
+        }
+    }
+}
+
+```
+
+## Secrets Management
+
+### Private Repo
+
 
 ## References:
 - https://www.jenkins.io/doc/book/pipeline/shared-libraries/

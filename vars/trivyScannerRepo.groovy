@@ -3,7 +3,7 @@ def call(Map config = [:]) {
     output_path=${config.outputPath}
     report_name=$(basename $(pwd))
     version=\$(date +'%y.%m.%d')
-    report_name=\$BUILD_ID-/$reportName-\$version.txt
+    report_name=\$BUILD_ID-/$report_name-\$version.txt
     result=\$(trivy fs . -o $report_name )
 
     echo \$result

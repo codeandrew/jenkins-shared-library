@@ -10,9 +10,9 @@ def call(Map config = [:]) {
     mkdir -p \$output_path
     report_name=\$BUILD_ID-${reportName}-\$version.txt
 
-    RESULT=\$output_path/\$report_name
+    RESULT_PATH=\$output_path/\$report_name
     docker pull \$target_image
-    result=\$(trivy image  -o $output_path/\$report_name )
+    result=\$(trivy image  -o \$RESULT_PATH \$target_image )
 
     echo \$result
     ls -altr \$output_path

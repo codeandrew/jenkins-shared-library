@@ -43,7 +43,7 @@ pipeline {
         stage('Scan Image') {
              steps{
                 trivyScannerContainer(
-                    targetImage: "${config.target_image}",
+                    targetImage: "${env.image_repository}/${env.container_name}:${env.app_version}",
                     outputPath:"${config.output_path}"
                 )
 

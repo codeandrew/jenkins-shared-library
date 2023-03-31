@@ -1,5 +1,6 @@
 def call(Map config = [:]) {
     sh """ #!/bin/bash
+    set -x
     export output_path=${config.outputPath}
     
     repo_name=\$(basename \$(pwd))

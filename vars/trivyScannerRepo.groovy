@@ -4,11 +4,12 @@ def call(Map config = [:]) {
     output_path=${config.outputPath}
     echo \$output_path
     
+    repo_name=\$(basename \$(pwd))
     
     """
 }
 
-    // repo_name=\$(basename \$(pwd))
+    
     
     // version=\$(date +'%y.%m.%d')
     // REPORT_NAME=\$BUILD_ID-\$repo_name-\$version.txt

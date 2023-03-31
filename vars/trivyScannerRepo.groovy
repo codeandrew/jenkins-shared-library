@@ -1,7 +1,7 @@
 def call(Map config = [:]) {
     sh """ #!/bin/bash
     set -x
-    output_path=${{config.outputPath}}
+    output_path=${config.outputPath}
     mkdir -p \$output_path
     repo_name=$(basename $(pwd))
     version=\$(date +'%y.%m.%d')

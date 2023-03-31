@@ -1,7 +1,7 @@
 
 def call(Map config = [:]) {
     def reportName = "${config.targetImage}".replaceAll("/", "_").replaceAll(":", "_")
-    git branch: 'main', credentialsId: "${config.gitSecrets}", url: 'https://github.com/codeandrew/scanner-service.git'
+    git branch: "${config.scannerRepoBranch}", credentialsId: "${config.gitSecrets}", url: 'https://github.com/codeandrew/scanner-service.git'
     
     sh """ #!/bin/bash
     cd client
@@ -21,6 +21,6 @@ def call(Map config = [:]) {
 
     echo \$result
     ls -altr \$output_path
-    SCANNER_URL=${config.scannerURL} python3 scanner-client.py \$result
+    #SCANNER_URL=${config.scannerURL} python3 scanner-client.py \$result
     """
 }

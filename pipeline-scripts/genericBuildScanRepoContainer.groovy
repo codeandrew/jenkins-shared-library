@@ -21,7 +21,7 @@ pipeline {
 
         stage('Scan Repository'){
             steps{
-                trivyScannerRepo(
+                trivyRepoScanner(
                     outputPath: "${config.output_path}"
                 )
                 dir("${config.output_path}"){
@@ -42,7 +42,7 @@ pipeline {
 
         stage('Scan Image') {
              steps{
-                trivyScannerContainer(
+                trivyContainerScanner(
                     targetImage: "${env.image_repository}/${env.container_name}:${env.app_version}",
                     outputPath:"${config.output_path}"
                 )

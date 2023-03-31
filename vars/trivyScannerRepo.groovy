@@ -8,10 +8,10 @@ def call(Map config = [:]) {
 
     pwd; ls -latr
     printenv | sort
+    mkdir -p \$OUTPUT_DIR
+
+    result=\$(trivy fs . -o \$OUTPUT_DIR/\$REPORT_NAME )
+    echo \$result
+    ls -altr \$OUTPUT_DIR
     """
 }
-    // mkdir -p \$OUTPUT_DIR
-    // result=\$(trivy fs . -o $OUTPUT_DIR/\$REPORT_NAME )
-
-    // echo \$result
-    // ls -altr \$OUTPUT_DIR

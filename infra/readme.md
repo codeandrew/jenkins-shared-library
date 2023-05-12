@@ -11,6 +11,13 @@
 - kubectl
   - login creds 
   
+## Setting up VM agent
+
+```
+sudo apt-get update
+sudo apt install -y --no-install-recommends openjdk-17-jdk-headless
+
+```
 
 ## Overrides
 Never do this in Production, only for Debugging Purposes 

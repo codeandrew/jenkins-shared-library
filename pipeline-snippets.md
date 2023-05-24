@@ -31,3 +31,35 @@ pipeline {
 }
 
 ```
+
+stages that check for specific branch conditions:
+
+the pipeline has a stage called "Identify Branch" where it checks the branch name and performs specific actions based on the conditions. If the branch name is "develop", it echoes "Merged to develop branch". If the branch name starts with "release/", it echoes "Release branch created".
+
+```groovy
+pipeline {
+    agent any
+
+    stages {
+        stage('Identify Branch') {
+            steps {
+                script {
+                    def branchName = env.BRANCH_NAME
+                    echo "Triggered branch: $branchName"
+
+                    // Check if merged to develop branch
+                    if (branchName == 'develop') {
+                        echo "Merged to develop branch"
+                    }
+
+                    // Check if release/* branch is created
+                    if (branchName.startsWith('release/')) {
+                        echo "Release branch created"
+                    }
+                }
+            }
+        }
+    }
+}
+
+```

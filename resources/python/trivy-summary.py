@@ -1,12 +1,40 @@
 import sys 
-from collections import defaultdict 
 import json
+import requests
+import datetime
+import os
 
-filepath = sys.argv[1]
+"""
+data
 
+Results
+- Target # Image Name
+  Vulnerabilities:
+  - VulnerabilityID # CVE
+    PkgName # Library
+    InstalledVersion # #
+    Severity
+    Title # Title
+    Description #
+    PrimaryURL # Primary Source 
+"""
 def log(message):
     print(message)
     sys.stdout.flush()
+
+def store_json(data, filename):
+    with open(filename, 'w') as f:
+        json.dump(data, f)
+
+def send_post_request(data, url):
+    headers = {'Content-Type': 'application/json'}
+    r = requests.post(url, json=data, headers=headers)
+    return r.json()
+
+def create_timestamp():
+    now = datetime.datetime.now()
+    timestamp = now.strftime('%Y%m%d')
+    return timestamp
 
 def check_vulnerabilities(data):
     critical = data["CRITICAL"] or 0
@@ -14,42 +42,78 @@ def check_vulnerabilities(data):
     medium = data["MEDIUM"] or 0
 
     if critical > 0 or high > 0 or medium > 0:
-        log("Critical Vulnerabilities: ")
-        log(critical)
+        print("Critical Vulnerabilities: ")
+        print(critical)
 
-        log("High Vulnerabilities")
-        log(high)
+        print("High Vulnerabilities")
+        print(high)
         
-        log("Medium Vulnerabilities")
-        log(medium)
+        print("Medium Vulnerabilities")
+        print(medium)
 
-        log("Failing pipeline ...")
+        print("Failing pipeline ...")
         exit(1)
     pass
 
-def summary():
-        ret_json = defaultdict(int)
-        try:
-            with open(filepath) as f:
-                result = json.load(f)
-                for target in result:
-                    target_info = target.get("Target")
-                    if target_info.find("(") != -1:
-                        ret_json["OS"] = target_info.split("(")[1].split(")")[0]
-                        if target.get("Vulnerabilities"):
-                            for vuln in target.get("Vulnerabilities"):
-                                ret_json["TOTAL"] += 1
-                                ret_json[vuln.get("Severity")] += 1
-            log(ret_json)
-            json.dumps(ret_json)
-            check_vulnerabilities(ret_json)
-            return ret_json
-        except Exception as err:
-            print(err)
-            return {}
+def count_occurrences(data):
+    count = {}
+    for item in data:
+        if item in count:
+            count[item] += 1
+        else:
+            count[item] = 1
+    return count
 
-def main():
-    summary()
+def main(file):
+    data = {
+        "vulnerabilities": []
+    }
+    try:
+        with open(file) as f:
+            result = json.load(f)
+            data['image_name'] = result['ArtifactName']
+            for target in result['Results']:
+                print('1')
+                if target.get('Vulnerabilities'):
+                    print('2')
+                    for v in target['Vulnerabilities']:
+                        vulns = {
+                            "library": v.get('PkgName', ''),
+                            "vulnerability": v.get('VulnerabilityID', ''),
+                            "installed_version": v.get('InstalledVersion', ''),
+                            "severity": v.get('Severity', ''),
+                            "title":  v.get('Title', '') ,
+                            "description": v.get('Description', ''),
+                            "primary_source": v.get('PrimaryURL', ''),
+                            "target": target.get('Target', '') 
+                        }
+
+                        data['vulnerabilities'].append(vulns)
+        
+        # Overview of the data
+        total_cves = [i['library'] for i in data['vulnerabilities']]
+        total_vulnerable_libraries = len(set(total_cves))
+        data['total_cve'] = len(total_cves)
+        data['total_vulnerable_libraries'] = total_vulnerable_libraries
+        print(
+            f"[+] Total CVEs: { len(total_cves) }",
+            f"\n[+] Total Vulnerable Libraries: { total_vulnerable_libraries }"
+        )
+        # print(data['vulnerabilities'])
+        
+        summarize_severity = []
+        for i in data['vulnerabilities']:
+            # print( i.get('severity'))
+            summarize_severity.append( i.get('severity') )
+
+        occurrences = count_occurrences(summarize_severity)
+        check_vulnerabilities(occurrences)
+
+    except Exception as err:
+        print("[-] Something went wrong",err)
+        return {}
+
 
 if __name__ == "__main__":
-    main()
+    file = sys.argv[1]
+    main(file)

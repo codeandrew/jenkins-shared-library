@@ -8,11 +8,12 @@ def call(Map config = [:]) {
     version=\$(date +'%y.%m.%d')
 
     mkdir -p \$output_path
-    report_name=\$BUILD_ID-${reportName}-\$version.txt
+    report_name=\$BUILD_ID-${reportName}-\$version
 
     RESULT_PATH=\$output_path/\$report_name
     docker pull \$target_image
-    result=\$(trivy image  -o \$RESULT_PATH \$target_image )
+    trivy image  --no-progress -f json -o \$RESULT_PATH.json $target_image    
+    result=\$(trivy image  -o \$RESULT_PATH.txt \$target_image )
 
     echo \$result
     ls -altr \$output_path

@@ -4,13 +4,15 @@ def call(Map config = [:]) {
     output_path=${config.outputPath}
     repo_name=\$(basename \$(pwd))
     version=\$(date +'%y.%m.%d')
-    REPORT_NAME=\$BUILD_ID-\$repo_name-\$version.txt
+    REPORT_NAME=\$BUILD_ID-\$repo_name-\$version
 
     pwd; ls -latr
     printenv | sort
     mkdir -p \$output_path
 
-    result=\$(trivy fs . -o \$output_path/\$REPORT_NAME )
+    rm trivy-repo-summary.json
+    trivy fs . --no-progress -f json -o trivy-repo-summary.json
+    result=\$(trivy fs . -o \$output_path/\$REPORT_NAME.txt )
     echo \$result
     ls -altr \$output_path
     """

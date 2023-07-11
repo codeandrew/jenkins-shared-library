@@ -37,9 +37,12 @@ def create_timestamp():
     return timestamp
 
 def check_vulnerabilities(data):
+    print(data)
     critical = data["CRITICAL"] or 0
     high = data["HIGH"] or 0
     medium = data["MEDIUM"] or 0
+
+
 
     if critical > 0 or high > 0 or medium > 0:
         print("Critical Vulnerabilities: ")
@@ -53,6 +56,8 @@ def check_vulnerabilities(data):
 
         print("Failing pipeline ...")
         sys.exit(1)
+    else:
+        print('Pipeline Passed')
     pass
 
 def count_occurrences(data):

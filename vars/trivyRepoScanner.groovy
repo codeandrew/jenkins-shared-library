@@ -10,7 +10,11 @@ def call(Map config = [:]) {
     printenv | sort
     mkdir -p \$output_path
 
-    rm trivy-repo-summary.json
+    
+    if [ -f "trivy-repo-summary.json" ]; then
+        rm trivy-repo-summary.json
+    fi
+    
     trivy fs . --no-progress -f json -o trivy-repo-summary.json
     result=\$(trivy fs . -o \$output_path/\$REPORT_NAME.txt )
     echo \$result

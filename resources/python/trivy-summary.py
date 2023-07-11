@@ -38,11 +38,9 @@ def create_timestamp():
 
 def check_vulnerabilities(data):
     print(data)
-    critical = data["CRITICAL"] or 0
-    high = data["HIGH"] or 0
-    medium = data["MEDIUM"] or 0
-
-
+    critical = data.get("CRITICAL", 0)
+    high = data.get("HIGH",  0)
+    medium = data.get("MEDIUM",  0)
 
     if critical > 0 or high > 0 or medium > 0:
         print("Critical Vulnerabilities: ")

@@ -44,4 +44,20 @@ ssh-keygen -t rsa
 docker run -d --restart always --name agent -v /home/jenkins:/var/jenkins_home -p 2222:22 -e JENKINS_AGENT_SSH_PUBKEY="ssh-rsa *************  user@email" jenkins/ssh-agent:jdk11
 
 
+## Jenkins Working Directories and Files System
+
+`/var/lib/jenkins/`
+inside is owned by user and group `jenkins`
+```
+drwxr-xr-x  29 jenkins jenkins      4096 May 28 11:25 users
+drwxr-xr-x 109 jenkins jenkins      8192 Jul 11 04:29 workspace
+```
+
+
+```
+# To view job builds
+/var/lib/jenkins/jobs/<pipeline-script-name>/builds/367
+# 
+/var/lib/jenkins/workspace/<pipeline-script-name>/
+```
 

@@ -52,7 +52,7 @@ def check_vulnerabilities(data):
         print(medium)
 
         print("Failing pipeline ...")
-        exit(1)
+        sys.exit(1)
     pass
 
 def count_occurrences(data):
